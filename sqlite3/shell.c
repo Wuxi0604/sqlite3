@@ -236,6 +236,35 @@ extern LPWSTR sqlite3_win32_utf8_to_unicode(const char *zText);
 #if (defined(_WIN32) || defined(WIN32)) && !SQLITE_OS_WINRT
 static void setBinaryMode(FILE *file, int isOutput){
   if( isOutput ) fflush(file);
+  /*
+  调用fflush()会将缓冲区中的内容写到stream所指的文件中去.
+  若stream为NULL，则会将所有打开的文件进行数据更新
+  fflush(stdin)：刷新缓冲区,将缓冲区内的数据清空并丢弃
+  fflush(stdout)：刷新缓冲区,将缓冲区内的数据输出到设备
+  */
+  //设置打开文件方式
+
+  /*_fileno把文件流指针转换成文件描述符
+     FILE   *fp;
+     int   fd;
+     fp = fopen("/etc/passwd", "r");
+     fd = fileno(fp);
+     printf("fd = %d\n", fd);
+     fclose(fp);
+     文件描述词是Linux编程中的一个术语。当一个文件打开后，
+     系统会分配一部分资源来保存该文件的信息，
+     以后对文件的操作就可以直接引用该部分资源了。
+     文件描述词可以认为是该部分资源的一个索引，在打开文件时返回。
+     在使用fcntl函数对文件的一些属性进行设置时就需要一个文件描述词参数。
+    
+    以前知道，当程序执行时，就已经有三个文件流打开了，
+    它们分别是标准输入stdin，标准输出stdout和标准错误输出stderr。
+    和流式文件相对应的是，也有三个文件描述符被预先打开，
+    它们分别是0，1，2，代表标准输入、标准输出和标准错误输出。
+    
+    需要指出的是，上面的流式文件输入、
+    输出和文件描述符的输入输出方式不能混用，否则会造成混乱。
+  */
   _setmode(_fileno(file), _O_BINARY);
 }
 static void setTextMode(FILE *file, int isOutput){
@@ -23100,11 +23129,25 @@ int SQLITE_CDECL wmain(int argc, wchar_t **wargv){
 #endif
 
   setBinaryMode(stdin, 0);
+
+  /*
+  int setvbuf(FILE *stream, char *buffer, int mode, size_t size);
+    stream -- 这是指向 FILE 对象的指针，该 FILE 对象标识了一个打开的流。
+    buffer -- 这是分配给用户的缓冲。如果设置为 NULL，该函数会自动分配一个指定大小的缓冲。
+    mode -- 这指定了文件缓冲的模式：
+
+_IOFBF	全缓冲：对于输出，数据在缓冲填满时被一次性写入。对于输入，缓冲会在请求输入且缓冲为空时被填充。
+_IOLBF	行缓冲：对于输出，数据在遇到换行符或者在缓冲填满时被写入，具体视情况而定。对于输入，缓冲会在请求输入且缓冲为空时被填充，直到遇到下一个换行符。
+_IONBF	无缓冲：不使用缓冲。每个 I/O 操作都被即时写入。buffer 和 size 参数被忽略。
+    size --这是缓冲的大小，以字节为单位。
+
+  */
   setvbuf(stderr, 0, _IONBF, 0); /* Make sure stderr is unbuffered */
 #ifdef SQLITE_SHELL_WASM_MODE
   stdin_is_interactive = 0;
   stdout_is_console = 1;
 #else
+  //主要功能是检查设备类型 ， 判断文件描述词是否是为终端机。
   stdin_is_interactive = isatty(0);
   stdout_is_console = isatty(1);
 #endif
