@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sqlite3", "sqlite3\sqlite3.vcxproj", "{4B61BE4E-8A35-45B1-94E5-A4E78E684A9E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_dsqlite3", "test_dsqlite3\test_dsqlite3.vcxproj", "{F0A0802F-708E-4969-ACEC-2A81FD487D9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{4B61BE4E-8A35-45B1-94E5-A4E78E684A9E}.Release|x64.Build.0 = Release|x64
 		{4B61BE4E-8A35-45B1-94E5-A4E78E684A9E}.Release|x86.ActiveCfg = Release|Win32
 		{4B61BE4E-8A35-45B1-94E5-A4E78E684A9E}.Release|x86.Build.0 = Release|Win32
+		{F0A0802F-708E-4969-ACEC-2A81FD487D9B}.Debug|x64.ActiveCfg = Debug|x64
+		{F0A0802F-708E-4969-ACEC-2A81FD487D9B}.Debug|x64.Build.0 = Debug|x64
+		{F0A0802F-708E-4969-ACEC-2A81FD487D9B}.Debug|x86.ActiveCfg = Debug|Win32
+		{F0A0802F-708E-4969-ACEC-2A81FD487D9B}.Debug|x86.Build.0 = Debug|Win32
+		{F0A0802F-708E-4969-ACEC-2A81FD487D9B}.Release|x64.ActiveCfg = Release|x64
+		{F0A0802F-708E-4969-ACEC-2A81FD487D9B}.Release|x64.Build.0 = Release|x64
+		{F0A0802F-708E-4969-ACEC-2A81FD487D9B}.Release|x86.ActiveCfg = Release|Win32
+		{F0A0802F-708E-4969-ACEC-2A81FD487D9B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
